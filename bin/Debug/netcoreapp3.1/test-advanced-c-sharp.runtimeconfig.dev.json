@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/home/sandy/.dotnet/store/|arch|/|tfm|",
+      "/home/sandy/.nuget/packages"
+    ]
+  }
+}

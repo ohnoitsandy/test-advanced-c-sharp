@@ -1,0 +1,11 @@
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp.deps.json
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp.runtimeconfig.json
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp.runtimeconfig.dev.json
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp.dll
+/home/sandy/Documents/platzi/test-advanced-c-sharp/bin/Debug/netcoreapp3.1/test-advanced-c-sharp.pdb
+/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/Debug/netcoreapp3.1/test-advanced-c-sharp.csprojAssemblyReference.cache
+/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/Debug/netcoreapp3.1/test-advanced-c-sharp.AssemblyInfoInputs.cache
+/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/Debug/netcoreapp3.1/test-advanced-c-sharp.AssemblyInfo.cs
+/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/Debug/netcoreapp3.1/test-advanced-c-sharp.dll
+/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/Debug/netcoreapp3.1/test-advanced-c-sharp.pdb
