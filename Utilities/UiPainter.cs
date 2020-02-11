@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
+using CoreTest.Entities;
 using static System.Console;
 
 namespace CoreTest.Utilities
@@ -77,7 +80,7 @@ namespace CoreTest.Utilities
     public static void PaintEdit()
     {
       PaintTitle("EDIT A USER");
-      WriteLine("INPUT ANY USER DATA");
+      WriteLine("INPUT NEW VALUE");
     }
 
     public static void PaintDelete()
@@ -89,7 +92,25 @@ namespace CoreTest.Utilities
     public static void PaintSearch()
     {
       PaintTitle("SEARCH A USER");
-      WriteLine("INPUT USER NAME");
+      WriteLine("SELECT A SEARCH OPTION");
+      WriteLine("1: BY FIRST NAME\n2: BY LAST NAME\n" +
+                "3: BY MOTHERS LAST NAME\n4: BY BIRTHDATE(MM/DD/YYYY)\n" +
+                "5: BY MARITAL STATUS\n6: BY BLOOD TYPE\n7: BY GENDER");
+    }
+
+    public static void PaintResult(IEnumerable query)
+    {
+      Clear();
+      int age = 0;
+      PaintTitle("RESULTS");
+      foreach (var result in query)
+      {
+        var answer = (User) result;
+        age = DateTime.Now.Year - answer.Birthdate.Year;
+        if (DateTime.Now.DayOfYear < answer.Birthdate.DayOfYear)
+          age = age - 1;
+        WriteLine($"{answer.FirstName} {answer.LastName} {answer.MothersLastName} \n Age: {age}");
+      }
     }
   }
 }

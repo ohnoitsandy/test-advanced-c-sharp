@@ -1,6 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Common;
+using System.IO;
+using System.Linq;
 using System.Reflection.Metadata;
+using System.Security;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Schema;
 using static System.Console;
 using CoreTest.Entities;
 using CoreTest.Utilities;
@@ -15,8 +24,29 @@ namespace CoreTest.App
         {
             Users = new List<User>();
         }
+
+        public static void Start()
+        {
+            string filePath = @"/home/sandy/Documents/platzi/test-advanced-c-sharp/User.xml";
+            if (File.Exists(filePath))
+                WriteLine("The file already exists");
+            File.Create(filePath);
+        }
+
+         // public static void End()
+         // {
+         //     XmlDocument document = new XmlDocument();
+         //     document.Load("User.xml");
+         //     XmlNodeList userNodes = document.SelectNodes("//Users/User");
+         //     foreach (XmlNode userNode in userNodes)
+         //     {
+         //         userNode.Attributes["Id"].Value = Users.
+         //     }
+         // }
         
-        #region UserCreation
+        //USER CRUD
+        
+        #region CreateUser
         public static void CreateUser()
         {
             UiPainter.PaintAddTitle();
@@ -30,6 +60,7 @@ namespace CoreTest.App
             SetGender(user);
             Users.Add(user);
         }
+        
         private static void AddFirstName(User user)
         {
             UiPainter.PaintAddFirstName();
@@ -75,60 +106,116 @@ namespace CoreTest.App
         private static void SetBloodType(User user)
         {
             UiPainter.PaintSetBloodType();
-            switch (ReadLine())
+            user.BloodType = ReadLine() switch
             {
-                case "1":
-                    user.BloodType = BloodType.BRhPositive;
-                    break;
-                case "2":
-                    user.BloodType = BloodType.ORhNegative;
-                    break;
-                case "3":
-                    user.BloodType = BloodType.BRhPositive;
-                    break;
-                case "4":
-                    user.BloodType = BloodType.BRhNegative;
-                    break;
-                case "5":
-                    user.BloodType = BloodType.ARhPositive;
-                    break;
-                case "6":
-                    user.BloodType = BloodType.ARhNegative;
-                    break;
-                case "7":
-                    user.BloodType = BloodType.ABRhPositive;
-                    break;
-                case "8":
-                    user.BloodType = BloodType.ARhNegative;
-                    break;
-            }
+                "1" => BloodType.Orhpositive,
+                "2" => BloodType.Orhnegative,
+                "3" => BloodType.Brhpositive,
+                "4" => BloodType.Brhnegative,
+                "5" => BloodType.Arhpositive,
+                "6" => BloodType.Arhnegative,
+                "7" => BloodType.Abrhpositive,
+                "8" => BloodType.Abrhnegative,
+                _ => user.BloodType
+            };
             Clear();
         }
 
         private static void SetGender(User user)
         {
             UiPainter.PaintSetGender();
-            switch (ReadLine())
+            user.Gender = ReadLine() switch
             {
-                case "1":
-                    user.Gender = Gender.Female;
-                    break;
-                case "2":
-                    user.Gender = Gender.Male;
-                    break;
-                case "3":
-                    user.Gender = Gender.NonBinary;
-                    break;
-            }
+                "1" => Gender.Female,
+                "2" => Gender.Male,
+                "3" => Gender.NonBinary,
+                _ => user.Gender
+            };
             Clear();
         }
         #endregion
 
-        #region UserModification
+        #region ModifyUser
         public static void EditUser()
         {
+            var query = SearchUser();
             UiPainter.PaintEdit();
-            var selection = ReadLine();
+            string newValue = ReadLine();
+            foreach (var user in query)
+            {
+                int index = Users.FindIndex(res => res.FirstName == user.FirstName);
+                user.FirstName = newValue;
+                Users.Insert(index, user);
+            }
+        }
+        #endregion
+
+        #region DeleteUser
+
+        public static void DeleteUser()
+        {
+            var query = SearchUser();
+            UiPainter.PaintDelete();
+            foreach (var user in query)
+            {
+                Users.Remove(user);
+            }
+        }
+        #endregion
+
+        #region SearchUser
+        public static IEnumerable<User> SearchUser()
+        {
+            UiPainter.PaintSearch();
+            string selection;
+            IEnumerable<User> query = null;
+            switch (ReadLine())
+            {
+                case "1":
+                    UiPainter.PaintAddFirstName();
+                    selection = ReadLine();
+                     query = from user in Users where user.FirstName == selection select user;
+                    UiPainter.PaintResult(query);
+                    break;
+                case "2":
+                    UiPainter.PaintAddMoLastName();
+                    selection = ReadLine();
+                    query = from user in Users where user.LastName == selection select user;
+                    UiPainter.PaintResult(query);
+                    break;
+                case "3":
+                    UiPainter.PaintAddMoLastName();
+                    selection = ReadLine();
+                    query = from user in Users where user.MothersLastName == selection select user;
+                    break;
+                case "4":
+                    UiPainter.PaintAddBirthDate();
+                    selection = ReadLine();
+                    query = from user in Users where user.Birthdate.ToString() == selection select user;
+                break;
+                case "5":
+                    UiPainter.PaintSetMaStatus();
+                    selection = ReadLine();
+                    query = from user in Users where selection != null && String.Equals(user.MaritalStatus.ToString(),
+                                                         selection, StringComparison.CurrentCultureIgnoreCase) select user;
+                    break;
+                case "6":
+                    UiPainter.PaintSetBloodType();
+                    selection = ReadLine();
+                    query = from user in Users
+                        where user.MaritalStatus.ToString().ToUpper() == selection.ToUpper()
+                        select user;
+                    break;
+                case "7":
+                    UiPainter.PaintSetGender();
+                    selection = ReadLine();
+                    query = from user in Users
+                        where user.Gender.ToString().ToUpper() == selection.ToUpper()
+                        select user;
+                    break;
+            }
+            UiPainter.PaintResult(query);
+            return query.ToList();
         }
         #endregion
     }

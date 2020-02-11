@@ -23,10 +23,10 @@ namespace CoreTest.App
                         UserHandler.EditUser();
                         break;
                     case 3:
-                        UiPainter.PaintDelete();
+                        UserHandler.DeleteUser();
                         break;
                     case 4:
-                        UiPainter.PaintSearch();
+                        UserHandler.SearchUser();
                         break;
                     case 5:
                         break;

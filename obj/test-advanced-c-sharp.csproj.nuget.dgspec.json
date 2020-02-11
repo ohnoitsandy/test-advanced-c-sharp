@@ -14,7 +14,7 @@
         "outputPath": "/home/sandy/Documents/platzi/test-advanced-c-sharp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/sandy/.config/NuGet/NuGet.Config"
+          "/home/sandy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
